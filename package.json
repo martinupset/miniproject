@@ -4,9 +4,8 @@
   "description": "this is for self-learning",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint ./mini-fe/src/*.js",
-    "fix": " prettier ./mini-fe/src/*.js --write"
+    "lint": "eslint --ext .js ./packages/mini-fe/src ./packages/mini-be",
+    "fix": "prettier ./packages/mini-fe/src/*.js --write ./packages/mini-be/*.js --write"
   },
   "repository": {
     "type": "git",
@@ -19,6 +18,16 @@
   },
   "homepage": "https://github.com/martinupset/miniproject#readme",
   "devDependencies": {
+    "@babel/cli": "^7.7.7",
+    "@babel/core": "^7.7.7",
+    "@babel/plugin-proposal-do-expressions": "^7.7.4",
+    "@babel/plugin-proposal-export-default-from": "^7.7.4",
+    "@babel/plugin-proposal-logical-assignment-operators": "^7.7.4",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.7.4",
+    "@babel/plugin-proposal-optional-chaining": "^7.7.5",
+    "@babel/plugin-proposal-pipeline-operator": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "@babel/preset-react": "^7.7.4",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^6.1.0",
@@ -34,7 +43,6 @@
   },
   "private": true,
   "workspaces": [
-    "mini-fe",
-    "mini-be"
+    "packages/*"
   ]
 }
