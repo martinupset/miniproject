@@ -1,0 +1,11 @@
+.title{
+  text-align: center;
+  margin: 0 auto;
+  font-size: x-large;
+  font-family: cursive;
+  font-weight: bold;
+}
+
+body{
+  background: linear-gradient(to right, #544a7d, #ffd452);
+}
