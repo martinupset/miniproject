@@ -1,49 +1,34 @@
 var koa = require('koa')
-var app = new koa()
 var route = require('koa-route')
 const User = require('./model/User')
+const cors = require('koa2-cors');
+const bodyParser = require('koa-bodyparser');
 require('dotenv').config()
+const {signIn, signUp} = require('./controller/sign');
 
-//1.假如访问根目录则返回hello word
-//2.假如不是根目录则返回其他东西
-
-// const main = (ctx) => {// koa提供的context对象
-//   if(ctx.request.path === '/'){
-//     ctx.response.body = 'hello world'
-//   }else{
-//     ctx.response.type = 'html'
-//     ctx.response.body = '<a href = "/">fuck</a>'
-//   }
-// }
 const PORT = process.env.PORT
 const db = require('./config/db')
-
-var log3 = new Promise((res, rej) =>{
-  setTimeout(() => {
-    console.log('three')
-    res()
-  })
-})
+var app = new koa()
 
 db.authenticate()
 .then(()=>console.log('db connected'))
 .catch(err => (console.log('err:' + err)))
 
-const data = (ctx) => {
-  User.findAll()
+//get data list
+const data = async (ctx) => {
+  await User.findAll({where: {email:'1234@163.com'}, attributes: ['password']})
   .then(user => {
+    ctx.response.body = user.password
     console.log(user)
-    // ctx.response.body = {user}
   })
   .catch(err => {console.log(err)})
 }
+
+
 const main = (ctx) => {
   ctx.response.body = 'hello world'
 }
 
-const other = (ctx) => {
-  ctx.response.body = 'fuck koa'
-}
 
 const back = async function(ctx,next) {
   ctx.response.redirect('/')
@@ -51,9 +36,20 @@ const back = async function(ctx,next) {
   await log3()
 }//重定向
 
+//use middleware to fix cross-domain
+app.use(
+  cors({
+    origin: '*',
+    allowHeaders: ['Content-Type', 'Authorization', 'Accept']
+  })
+);
+
+app.use(bodyParser());
+
 app.use(route.get('/', main)) //1. 路径   2. CTX函数
-app.use(route.get('/other', other))
 app.use(route.get('/back', back))
 app.use(route.get('/data',data))
+app.use(route.post('/signIn', signIn))
+app.use(route.post('/signUp', signUp))
 
 app.listen(PORT)

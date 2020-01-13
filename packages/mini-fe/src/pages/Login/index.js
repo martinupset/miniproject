@@ -1,7 +1,5 @@
-import React, { Component } from 'react'
-import {Flex} from 'antd'
-import {Link} from 'react-router-dom'
-import NavHeader from '../../component/NavHeader'
+import React from 'react'
+import {Link,withRouter} from 'react-router-dom'
 import style from './index.module.css'
 import 'tachyons'
 
@@ -12,11 +10,25 @@ class NormalLoginForm extends React.Component {
     e.preventDefault();//这里相当于阻止了表单提交时的默认行为
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        message.loading('You are Logging In...', 2.5)
-        .then(() => {
-          message.success('Now you are logged in', 1.0)
-          console.log('Received values of form: ', values);
+        // message.loading('You are Logging In...', 2.5)
+        // .then(() => {
+        //   message.success('Now you are logged in', 1.0)
+        //   console.log('Received values of form: ', values);
+        // })
+        (async () => {
+          const result = await fetch('http://localhost:3001/signIn', {
+          method: 'POST',
+          headers: {'Content-type': 'application/json'},
+          body: JSON.stringify(values)
         })
+          const text = await result.text()
+          console.log(text)
+          if(text === 'sign in success!'){
+            this.props.history.push('/dashboard')
+          }
+        })()
+
+
 
       }
     });
@@ -29,12 +41,12 @@ class NormalLoginForm extends React.Component {
         <div className = {style.title}>welcome back</div>
       <Form onSubmit={this.handleSubmit} className="login-form">
         <Form.Item>
-          {getFieldDecorator('username', {
-            rules: [{ required: true, message: 'Please input your username!' }],
+          {getFieldDecorator('email', {
+            rules: [{ required: true, message: 'Please input your email!' }],
           })(
             <Input
               prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-              placeholder="Username"
+              placeholder="E-mail"
             />,
           )}
         </Form.Item>
@@ -50,10 +62,7 @@ class NormalLoginForm extends React.Component {
           )}
         </Form.Item>
         <Form.Item>
-          {getFieldDecorator('remember', {
-            valuePropName: 'checked',
-            initialValue: true,
-          })(<Checkbox>Remember me</Checkbox>)}
+          <Checkbox>Remember me</Checkbox>
           <br/>
           <a className="login-form-forgot" href="">
             Forgot password
@@ -72,4 +81,4 @@ class NormalLoginForm extends React.Component {
 
 const Login = Form.create({ name: 'normal_login' })(NormalLoginForm);
 
-export default Login
+export default withRouter(Login)

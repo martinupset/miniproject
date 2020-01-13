@@ -2,7 +2,7 @@
   "name": "mini-be",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,7 +14,10 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "koa": "^2.11.0",
+    "koa-bodyparser": "^4.2.1",
     "koa-route": "^3.2.0",
+    "koa2-cors": "^2.0.6",
+    "mysql2": "^2.1.0",
     "sequelize": "^5.21.3"
   },
   "devDependencies": {}
