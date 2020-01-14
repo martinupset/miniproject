@@ -10,11 +10,6 @@ class NormalLoginForm extends React.Component {
     e.preventDefault();//这里相当于阻止了表单提交时的默认行为
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        // message.loading('You are Logging In...', 2.5)
-        // .then(() => {
-        //   message.success('Now you are logged in', 1.0)
-        //   console.log('Received values of form: ', values);
-        // })
         (async () => {
           const result = await fetch('http://localhost:3001/signIn', {
           method: 'POST',
@@ -26,10 +21,8 @@ class NormalLoginForm extends React.Component {
           if(text === 'sign in success!'){
             this.props.history.push('/dashboard')
           }
+          else{message.error(text)}
         })()
-
-
-
       }
     });
   };

@@ -1,5 +1,6 @@
 import React from 'react'
-import {Form, Input, Tooltip, Icon, Checkbox, Button} from 'antd';
+import {Form, Input, Tooltip, Icon, Checkbox, Button, message} from 'antd';
+import {withRouter} from 'react-router-dom'
 import 'tachyons'
 
 
@@ -13,7 +14,21 @@ class RegistrationForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
+        delete values.confirm
         console.log('Received values of form: ', values);
+        (async () => {
+          const result = await fetch('http://localhost:3001/signUp', {
+          method: 'POST',
+          headers: {'Content-type': 'application/json'},
+          body: JSON.stringify(values)
+        })
+          const text = await result.text()
+          console.log(text)
+          if(text === 'Sign up success!'){
+            this.props.history.push('/login')
+          }
+          else{message.error(text)}
+        })()
       }
     });
   };
@@ -105,19 +120,15 @@ class RegistrationForm extends React.Component {
             </span>
           }
         >
-          {getFieldDecorator('nickname', {
-            rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }],
+          {getFieldDecorator('name', {
+            rules: [{ required: true, message: 'Please input your username!', whitespace: true }],
           })(<Input />)}
         </Form.Item>
 
         <Form.Item >
-          {getFieldDecorator('agreement', {
-            valuePropName: 'checked',
-          })(
             <Checkbox>
               I have read the <a href="">agreement</a>
-            </Checkbox>,
-          )}
+            </Checkbox>
         </Form.Item>
         <Form.Item >
           <Button type="primary" htmlType="submit">
@@ -132,6 +143,6 @@ class RegistrationForm extends React.Component {
 
 const Register = Form.create({ name: 'register' })(RegistrationForm);
 
-export default Register
+export default withRouter(Register)
 
 

@@ -44,5 +44,8 @@
   "private": true,
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "bcrypt": "^3.0.7"
+  }
 }
