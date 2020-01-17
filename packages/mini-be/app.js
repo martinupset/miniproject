@@ -10,6 +10,12 @@ const PORT = process.env.PORT
 const db = require('./config/db')
 var app = new koa()
 
+//解决cookie跨域
+app.use(async(ctx,next) => {
+  ctx.set('Access-Control-Allow-Credentials', true);
+  await next()
+})
+
 db.authenticate()
 .then(()=>console.log('db connected'))
 .catch(err => (console.log('err:' + err)))

@@ -1,4 +1,5 @@
 const { dbRetrieve, dbNewUser, comparePwd } = require('../module/handledb');
+const jwt = require('../jwt/token')
 
 const signUp = async ctx => {
   const retrieveResult = await dbRetrieve(ctx.request.body.email);
@@ -11,7 +12,8 @@ const signUp = async ctx => {
 };
 
 const signIn = async ctx => {
-  const retrieveResult = await dbRetrieve(ctx.request.body.email);
+  const useremail = ctx.request.body.email
+  const retrieveResult = await dbRetrieve(useremail);
 
   if (retrieveResult === null) {
     ctx.response.body = 'user not exists!';
@@ -24,9 +26,18 @@ const signIn = async ctx => {
   );
 
   if (checkResult) {
-    ctx.response.body = 'sign in success!';
+    let token = jwt.creatToken(useremail)
+    ctx.response.body = {
+      status: 200,
+      description: 'sign in success!',
+      token: token
+      };
+    console.log(token)
   } else {
-    ctx.response.body = 'password not right!';
+    ctx.response.body = {
+      status: 400,
+      description: 'password not right!'
+      };
   }
 };
 
