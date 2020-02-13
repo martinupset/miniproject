@@ -1,8 +1,8 @@
-const signInReducer = function(state = {signIn:[]}, action){
+const signInReducer = function(state = {}, action){
   switch (action.type){
-    case 'VALIDATE':
+    case 'SIGNIN':
       return{
-       signIn: action.payload
+        signIn: action.payload.info
       }
 
     default:

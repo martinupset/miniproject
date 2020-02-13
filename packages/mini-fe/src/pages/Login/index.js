@@ -15,24 +15,14 @@ class NormalLoginForm extends React.Component {
     e.preventDefault(); //这里相当于阻止了表单提交时的默认行为
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        // (async () => {
-        //   const result = await fetch('http://localhost:3001/signIn', {
-        //     credentials: 'same-origin',
-        //     method: 'POST',
-        //     headers: { 'Content-type': 'application/json' },
-        //     body: JSON.stringify(values),
-        //   });
-        //   const text = await result.json();
-        //   console.log(text);
-        //   if (text.status === 200) {
-        //     document.cookie = `token = ${text.token}`
-        //     this.props.history.push('/dashboard');
-        //     console.log('cookie', document.cookie);
-        //   } else {
-        //     message.error(text.description);
-        //   }
-        // })();
         this.props.signInAction(values)
+        if (this.props.signIn.signIn.status === 200) {
+            document.cookie = `token = ${this.props.signIn.signIn.token}`
+            this.props.history.push('/dashboard');
+            console.log('cookie', document.cookie);
+          } else {
+            message.error(this.props.signIn.signIn.description);
+          }
       }
     });
   };
