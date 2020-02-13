@@ -26,7 +26,7 @@ const signIn = async ctx => {
   );
 
   if (checkResult) {
-    let token = jwt.creatToken(useremail)
+    let token = jwt.creatToken({useremail})
     ctx.response.body = {
       status: 200,
       description: 'sign in success!',
