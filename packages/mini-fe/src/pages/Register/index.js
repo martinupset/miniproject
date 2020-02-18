@@ -13,7 +13,6 @@ class RegistrationForm extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
-      console.log(this.props)
       if (!err) {
         delete values.confirm
         console.log('Received values of form: ', values);
