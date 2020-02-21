@@ -2,7 +2,7 @@ import React from 'react';
 import {BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom'
 import Login from './pages/Login/LoginContainer'
 import Register from './pages/Register/RegisterContainer'
-import Dashboard from './pages/Dashboard'
+import Dashboard from './pages/Dashboard/DashboardContainer'
 import 'antd/dist/antd.css'
 
 
