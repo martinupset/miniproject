@@ -1,4 +1,4 @@
-import {CHANGE_INPUT, ADD_ITEM, DELETE_ITEM} from '../actions/actionTypes'
+import {CHANGE_INPUT, ADD_ITEM, DELETE_ITEM,SHOW_TODO} from '../actions/actionTypes'
 
 const defaultState = {
   inputValue: 'Write Something',
@@ -10,6 +10,13 @@ const defaultState = {
 }
 
 const dashboardReducer = function(state = defaultState, action){
+
+  if(action.type === SHOW_TODO){
+    let newState = JSON.parse(JSON.stringify(state))
+    newState.list=action.payload.info
+    return newState
+  }
+
   if(action.type === CHANGE_INPUT){
     let newState = JSON.parse(JSON.stringify(state))
     newState.inputValue=action.value

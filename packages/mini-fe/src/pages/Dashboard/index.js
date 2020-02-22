@@ -8,6 +8,10 @@ class Dashboard extends Component{
     console.log(this.props)
   }
 
+  componentDidMount(){
+    this.props.showTodoAction()
+  }
+
   render(){
     return(
       <div style = {{margin: '10px'}}>
@@ -17,13 +21,16 @@ class Dashboard extends Component{
         style = {{width: '250px', marginRight: '10px'}}
         onChange = {(e) => this.props.changeInputAction(e.target.value)}
         />
-        <Button type = 'primary' onClick = {this.props.addItemAction}>add</Button>
+        <Button type = 'primary' onClick = {()=>this.props.addItemAction({description: this.props.dashboard.inputValue})}>add</Button>
         </div>
         <div style={{margin: '10px', width: '300px'}}>
         <List
             bordered
             dataSource={this.props.dashboard.list}
-            renderItem={(item,index)=><List.Item onClick={()=>this.props.deleteItemAction(index)}>{item}</List.Item>}/>
+            renderItem={(item,index)=><List.Item onClick={()=>this.props.deleteItemAction(index)}>
+              {item}
+              </List.Item>}>
+            </List>
         </div>
     </div>
     )
