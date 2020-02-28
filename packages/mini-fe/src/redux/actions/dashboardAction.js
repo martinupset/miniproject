@@ -5,6 +5,7 @@ import {objOfValueToArr} from '../changeObjToArr'
 export const showTodoAction = () => async (dispatch) =>{
   const res = await fetchShowTodo()
   const result = await res.json()
+  console.log(result)
   const arr = objOfValueToArr(result, 'description')
   console.log(arr)
   dispatch({

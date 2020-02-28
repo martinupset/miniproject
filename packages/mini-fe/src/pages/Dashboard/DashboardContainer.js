@@ -4,7 +4,8 @@ import {changeInputAction, addItemAction, deleteItemAction, showTodoAction} from
 
 const mapStateToProps = (state) => {
   return{
-    dashboard:state.dashboard
+    dashboard:state.dashboard,
+    signIn: state.signIn
   }
 }
 

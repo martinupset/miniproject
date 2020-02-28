@@ -8,6 +8,11 @@ class Dashboard extends Component{
     console.log(this.props)
   }
 
+  logout(){
+    this.props.history.push('/login');
+    document.cookie = `token = null`
+  }
+
   componentDidMount(){
     this.props.showTodoAction()
   }
@@ -31,6 +36,11 @@ class Dashboard extends Component{
               {item}
               </List.Item>}>
             </List>
+        </div>
+
+        <div>
+        <h1>Hello User {this.props.signIn.signIn.name}</h1>
+        <Button type = 'primary' onClick = {()=>this.logout()}>Logout</Button>
         </div>
     </div>
     )

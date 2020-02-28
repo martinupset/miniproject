@@ -30,7 +30,8 @@ const signIn = async ctx => {
     ctx.response.body = {
       status: 200,
       description: 'sign in success!',
-      token: token
+      token: token,
+      name: retrieveResult.dataValues.name
       };
     console.log(token)
   } else {

@@ -2,11 +2,7 @@ import {CHANGE_INPUT, ADD_ITEM, DELETE_ITEM,SHOW_TODO} from '../actions/actionTy
 
 const defaultState = {
   inputValue: 'Write Something',
-  list:[
-    'meeting',
-    'coding',
-    'eating'
-  ]
+  list:[]
 }
 
 const dashboardReducer = function(state = defaultState, action){
