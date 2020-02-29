@@ -34,8 +34,10 @@ class Dashboard extends Component{
             bordered
             dataSource={this.props.dashboard.list}
             renderItem={(item,index)=><List.Item onClick={()=>this.props.deleteItemAction(index,item.id)}>
-              {item.description}
-              </List.Item>}>
+              This item was update at {item.updateAt}
+              <List.Item.Meta description = {item.status} title = {item.description}/>
+              </List.Item>
+            }>
             </List>
         </div>
 
