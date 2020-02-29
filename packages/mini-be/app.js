@@ -61,6 +61,6 @@ app.use(route.post('/signIn', signIn))
 app.use(route.post('/signUp', signUp))
 app.use(route.post('/addItem', addItem))
 app.use(route.get('/showTodo', showTodo))
-app.use(route.post('/deleteItem', deleteItem))
+app.use(route.delete('/deleteItem', deleteItem))
 
 app.listen(PORT)
