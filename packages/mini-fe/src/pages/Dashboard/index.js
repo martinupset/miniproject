@@ -32,8 +32,8 @@ class Dashboard extends Component{
         <List
             bordered
             dataSource={this.props.dashboard.list}
-            renderItem={(item,index)=><List.Item onClick={()=>this.props.deleteItemAction(index)}>
-              {item}
+            renderItem={(item,index)=><List.Item onClick={()=>this.props.deleteItemAction(index,item.id)}>
+              {item.description}
               </List.Item>}>
             </List>
         </div>

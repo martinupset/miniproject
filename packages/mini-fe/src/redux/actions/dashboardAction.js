@@ -1,5 +1,5 @@
 import {CHANGE_INPUT, ADD_ITEM, DELETE_ITEM, SHOW_TODO} from './actionTypes'
-import {fetchShowTodo,fetchAddItem} from '../network/todo'
+import {fetchShowTodo,fetchAddItem,fetchDeleteItem} from '../network/todo'
 import {objOfValueToArr} from '../changeObjToArr'
 
 export const showTodoAction = () => async (dispatch) =>{
@@ -11,7 +11,7 @@ export const showTodoAction = () => async (dispatch) =>{
   dispatch({
     type: SHOW_TODO,
     payload: {
-      info: arr
+      info: result
     }
   })
 }
@@ -32,7 +32,19 @@ export const addItemAction = (value) => async (dispatch) =>{
   })
 }
 
-export const deleteItemAction = (index) =>({
-  type: DELETE_ITEM,
-  index
-})
+// export const deleteItemAction = (index) =>({
+//   type: DELETE_ITEM,
+//   index
+// })
+
+export const deleteItemAction = (index,id) => async (dispatch) =>{
+  const res = await fetchDeleteItem(id)
+  console.log(res)
+  dispatch({
+    type: DELETE_ITEM,
+    payload: {
+      index,
+      info: res
+    }
+  })
+}

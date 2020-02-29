@@ -19,8 +19,17 @@ const showTodo =  async ctx => {
   .catch(err => {console.log(err)})
 }
 
+const deleteTodo = async id =>{
+  await dbTodoList.destroy({
+    where: {
+      id: id
+    }
+  })
+}
+
 
 module.exports = {
   dbNewTodo,
-  showTodo
+  showTodo,
+  deleteTodo
 }

@@ -5,7 +5,7 @@ const cors = require('koa2-cors');
 const bodyParser = require('koa-bodyparser');
 require('dotenv').config()
 const {signIn, signUp} = require('./controller/sign');
-const {addItem} = require('./controller/todoList')
+const {addItem, deleteItem} = require('./controller/todoList')
 const {showTodo} = require('./module/handleTodoList')
 
 const PORT = process.env.PORT
@@ -61,5 +61,6 @@ app.use(route.post('/signIn', signIn))
 app.use(route.post('/signUp', signUp))
 app.use(route.post('/addItem', addItem))
 app.use(route.get('/showTodo', showTodo))
+app.use(route.post('/deleteItem', deleteItem))
 
 app.listen(PORT)
