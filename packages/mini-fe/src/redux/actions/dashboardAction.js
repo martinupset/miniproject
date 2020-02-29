@@ -1,13 +1,9 @@
-import {CHANGE_INPUT, ADD_ITEM, DELETE_ITEM, SHOW_TODO} from './actionTypes'
+import {CHANGE_INPUT, SHOW_TODO} from './actionTypes'
 import {fetchShowTodo,fetchAddItem,fetchDeleteItem} from '../network/todo'
-import {objOfValueToArr} from '../changeObjToArr'
 
 export const showTodoAction = () => async (dispatch) =>{
   const res = await fetchShowTodo()
   const result = await res.json()
-  console.log(result)
-  const arr = objOfValueToArr(result, 'description')
-  console.log(arr)
   dispatch({
     type: SHOW_TODO,
     payload: {
@@ -22,29 +18,26 @@ export const changeInputAction = (value) => ({
 })
 
 export const addItemAction = (value) => async (dispatch) =>{
-  const res = await fetchAddItem(value)
-  console.log(res)
+  await fetchAddItem(value)
+  const res = await fetchShowTodo()
+  const result = await res.json()
   dispatch({
-    type: ADD_ITEM,
+    type: SHOW_TODO,
     payload: {
-      info: res
+      info: result
     }
   })
+  console.log(result)
 }
 
-// export const deleteItemAction = (index) =>({
-//   type: DELETE_ITEM,
-//   index
-// })
-
 export const deleteItemAction = (index,id) => async (dispatch) =>{
-  const res = await fetchDeleteItem(id)
-  console.log(res)
+  await fetchDeleteItem(id)
+  const res = await fetchShowTodo()
+  const result = await res.json()
   dispatch({
-    type: DELETE_ITEM,
+    type: SHOW_TODO,
     payload: {
-      index,
-      info: res
+      info: result
     }
   })
 }
