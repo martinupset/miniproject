@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import 'antd/dist/antd.css'
 import {Input, Button, List} from 'antd'
+const {delCookie} = require('../handlecookie')
 
 class Dashboard extends Component{
   constructor(props){
@@ -10,7 +11,7 @@ class Dashboard extends Component{
 
   logout(){
     this.props.history.push('/login');
-    document.cookie = `token = null`
+    delCookie("token")
   }
 
   componentDidMount(){
