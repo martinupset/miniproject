@@ -21,7 +21,7 @@ const dashboardReducer = function(state = defaultState, action){
 
   if(action.type === ADD_ITEM){
     let newState = JSON.parse(JSON.stringify(state))
-    newState.list.push(newState.inputValue)
+    newState.list.push({"description":newState.inputValue})
     newState.inputValue = ''
     return newState
   }
