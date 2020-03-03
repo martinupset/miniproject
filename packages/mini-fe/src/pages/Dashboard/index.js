@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import 'antd/dist/antd.css'
-import {Input, Button, List} from 'antd'
+import {Input, Button, List, Skeleton, Alert} from 'antd'
 const {delCookie} = require('../handlecookie')
 
 class Dashboard extends Component{
@@ -33,9 +33,10 @@ class Dashboard extends Component{
         <List
             bordered
             dataSource={this.props.dashboard.list}
-            renderItem={(item,index)=><List.Item onClick={()=>this.props.deleteItemAction(index,item.id)}>
-              This item was update at {item.updateAt}
-              <List.Item.Meta description = {item.status} title = {item.description}/>
+            renderItem={(item,index)=><List.Item actions={[<a key="list-loadmore-edit">edit</a>,
+            <a key="list-loadmore-more" onClick={()=>alert(`This stuff was update at ${item.updateAt}`)}>more</a>,
+            <a key="list-loadmore-delete" onClick={()=>this.props.deleteItemAction(index,item.id)}>delete</a>]}>
+              <List.Item.Meta description = {item.status} title = {item.description} />
               </List.Item>
             }>
             </List>
