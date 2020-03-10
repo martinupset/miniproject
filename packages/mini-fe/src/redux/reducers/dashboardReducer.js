@@ -2,11 +2,7 @@ import {CHANGE_INPUT, ADD_ITEM, DELETE_ITEM,SHOW_TODO} from '../actions/actionTy
 
 const defaultState = {
   inputValue: 'Write Something',
-  list:[
-    'meeting',
-    'coding',
-    'eating'
-  ]
+  list:[]
 }
 
 const dashboardReducer = function(state = defaultState, action){
@@ -25,7 +21,7 @@ const dashboardReducer = function(state = defaultState, action){
 
   if(action.type === ADD_ITEM){
     let newState = JSON.parse(JSON.stringify(state))
-    newState.list.push(newState.inputValue)
+    newState.list.push({"description":newState.inputValue})
     newState.inputValue = ''
     return newState
   }

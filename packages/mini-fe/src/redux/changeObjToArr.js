@@ -7,3 +7,14 @@ export const objOfValueToArr = (object, att) => {
   }
   return arr;
   }
+
+// export const objOfValueToArr = (object) => {
+//   var arr = [];
+//   var i = 0;
+//   for (var item in object) {
+//   arr[i] = object[item];
+//   i++;
+//   }
+//   return arr;
+//   }
+

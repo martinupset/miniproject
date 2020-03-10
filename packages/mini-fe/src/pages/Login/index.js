@@ -2,8 +2,8 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import style from './index.module.css';
 import 'tachyons';
-
 import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
+const {setCookie} = require('../handlecookie')
 
 class NormalLoginForm extends React.Component {
   constructor(props){
@@ -17,7 +17,11 @@ class NormalLoginForm extends React.Component {
       if (!err) {
         this.props.signInAction(values)
         if (this.props.signIn.signIn.status === 200) {
-            document.cookie = `token = ${this.props.signIn.signIn.token}`
+            // var millisecond = new Date().getTime();
+            // var expiresTime = new Date(millisecond + 60 * 1000 * 15)
+            const cookieValue = this.props.signIn.signIn.token
+            setCookie("token", cookieValue, 15)
+            // document.cookie = `token = ${this.props.signIn.signIn.token}; expires= ${expiresTime}`
             this.props.history.push('/dashboard');
             console.log('cookie', document.cookie);
           } else {

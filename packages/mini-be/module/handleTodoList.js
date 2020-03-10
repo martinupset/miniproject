@@ -15,13 +15,21 @@ const showTodo =  async ctx => {
   })
   .then(result => {
     ctx.response.body = result
-    console.log(ctx)
   })
   .catch(err => {console.log(err)})
+}
+
+const deleteTodo = async id =>{
+  await dbTodoList.destroy({
+    where: {
+      id: id
+    }
+  })
 }
 
 
 module.exports = {
   dbNewTodo,
-  showTodo
+  showTodo,
+  deleteTodo
 }

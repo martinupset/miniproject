@@ -12,3 +12,11 @@ export function fetchAddItem(value){
     body: JSON.stringify(value)
   })
 }
+
+export function fetchDeleteItem(id){
+  return fetch('http://localhost:3001/deleteItem',{
+    method: 'DELETE',
+    headers: {'Content-type': 'application/json'},
+    body: JSON.stringify({"id":id})
+  })
+}
