@@ -1,5 +1,5 @@
 import {CHANGE_INPUT, SHOW_TODO} from './actionTypes'
-import {fetchShowTodo,fetchAddItem,fetchDeleteItem} from '../network/todo'
+import {fetchShowTodo,fetchAddItem,fetchDeleteItem,fetchChangeItem} from '../network/todo'
 
 export const showTodoAction = () => async (dispatch) =>{
   const res = await fetchShowTodo()
@@ -32,6 +32,18 @@ export const addItemAction = (value) => async (dispatch) =>{
 
 export const deleteItemAction = (index,id) => async (dispatch) =>{
   await fetchDeleteItem(id)
+  const res = await fetchShowTodo()
+  const result = await res.json()
+  dispatch({
+    type: SHOW_TODO,
+    payload: {
+      info: result
+    }
+  })
+}
+
+export const changeItemAction = (content) => async (dispatch) =>{
+  await fetchChangeItem(content)
   const res = await fetchShowTodo()
   const result = await res.json()
   dispatch({

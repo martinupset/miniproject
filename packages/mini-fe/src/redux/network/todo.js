@@ -20,3 +20,11 @@ export function fetchDeleteItem(id){
     body: JSON.stringify({"id":id})
   })
 }
+
+export function fetchChangeItem(content){
+  return fetch('http://localhost:3001/changeItem',{
+    method: 'PUT',
+    headers: {'Content-type': 'application/json'},
+    body: JSON.stringify(content)
+  })
+}

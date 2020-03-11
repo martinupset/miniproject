@@ -27,9 +27,25 @@ const deleteTodo = async id =>{
   })
 }
 
+const changeTodo = async (id, description,status) =>{
+  if(description != null){
+    await dbTodoList.update({description}, {
+      where:{id}
+    })
+  }
+  if(status != null){
+    await dbTodoList.update({status}, {
+      where:{id}
+    })
+  }
+}
+
+
+
 
 module.exports = {
   dbNewTodo,
   showTodo,
-  deleteTodo
+  deleteTodo,
+  changeTodo
 }

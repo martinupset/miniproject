@@ -1,32 +1,39 @@
 import React, { Component } from 'react'
 import 'antd/dist/antd.css'
-import {Input, Button, List, Skeleton, Alert} from 'antd'
-import {Modal} from 'antd'
+import {Input, Button, List, Modal} from 'antd'
 const {delCookie} = require('../handlecookie')
 
 class Dashboard extends Component{
-  state = {visible: false}
+  state = {visible: false, id: 0}
+
+  editorDescription = null
+
+  editorStatus = null
 
   constructor(props){
     super(props);
     console.log(this.state)
   }
 
-  showModal = () => {
+  showModal = (id) => {
     this.setState({
       visible: true,
+      id
     });
   };
 
-  handleOk = e => {
-    console.log(e);
+  handleOk = () => {
+    this.props.changeItemAction({
+      'id': this.state.id,
+      'description':this.editorDescription,
+      'status':this.editorStatus
+    })
     this.setState({
       visible: false,
     });
   };
 
-  handleCancel = e => {
-    console.log(e);
+  handleCancel = () => {
     this.setState({
       visible: false,
     });
@@ -56,7 +63,7 @@ class Dashboard extends Component{
         <List
             bordered
             dataSource={this.props.dashboard.list}
-            renderItem={(item,index)=><List.Item actions={[<a key="list-loadmore-edit" onClick = {this.showModal}>edit</a>,
+            renderItem={(item,index)=><List.Item actions={[<a key="list-loadmore-edit" onClick = {()=>this.showModal(item.id)}>edit</a>,
             <a key="list-loadmore-more" onClick={()=>alert(`This stuff was update at ${item.updateAt}`)}>more</a>,
             <a key="list-loadmore-delete" onClick={()=>this.props.deleteItemAction(index,item.id)}>delete</a>]}>
               <List.Item.Meta description = {item.status} title = {item.description} />
@@ -65,13 +72,15 @@ class Dashboard extends Component{
             </List>
 
         <Modal
-          title="Basic Modal"
+          title="todo editor"
           visible={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          <p>edit contents here...</p>
-          <p>edit status here...</p>
+          <Input placeholder="edit description here"
+          onChange ={(e) => {this.editorDescription = e.target.value}}></Input>
+          <Input placeholder="edit status here"
+          onChange = {(e) => {this.editorStatus = e.target.value}}></Input>
         </Modal>
         </div>
 

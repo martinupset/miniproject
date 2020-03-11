@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import Dashboard from './index'
-import {changeInputAction, addItemAction, deleteItemAction, showTodoAction} from '../../redux/actions/dashboardAction'
+import {changeInputAction, addItemAction, deleteItemAction, showTodoAction, changeItemAction} from '../../redux/actions/dashboardAction'
 
 const mapStateToProps = (state) => {
   return{
@@ -13,7 +13,8 @@ const mapDispatchToProps = {
   changeInputAction,
   addItemAction,
   deleteItemAction,
-  showTodoAction
+  showTodoAction,
+  changeItemAction
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
