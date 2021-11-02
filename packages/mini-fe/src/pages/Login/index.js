@@ -21,7 +21,9 @@ class NormalLoginForm extends React.Component {
             // var expiresTime = new Date(millisecond + 60 * 1000 * 15)
             const cookieValue = this.props.signIn.signIn.token
             setCookie("token", cookieValue, 15)
+            this.props.setAuthAction(cookieValue)
             // document.cookie = `token = ${this.props.signIn.signIn.token}; expires= ${expiresTime}`
+
             this.props.history.push('/dashboard');
             console.log('cookie', document.cookie);
           } else {
