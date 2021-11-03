@@ -1,6 +1,5 @@
 const React = require("react");
 const { Route, Redirect } = require("react-router-dom");
-const {fakeAuth} = require("./fakeAuth")
 
 
 const PrivateRoute = (({component: Component, auth, ...rest}) => {

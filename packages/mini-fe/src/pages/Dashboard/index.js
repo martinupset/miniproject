@@ -27,7 +27,7 @@ class Dashboard extends Component{
       'id': this.state.id,
       'description':this.editorDescription,
       'status':this.editorStatus
-    })
+    }, this.props.signIn.signIn.id)
     this.setState({
       visible: false,
     });
@@ -45,7 +45,7 @@ class Dashboard extends Component{
   }
 
   componentDidMount(){
-    this.props.showTodoAction()
+    this.props.showTodoAction(this.props.signIn.signIn.id)
   }
 
   render(){
@@ -57,7 +57,10 @@ class Dashboard extends Component{
         style = {{width: '250px', marginRight: '10px'}}
         onChange = {(e) => this.props.changeInputAction(e.target.value)}
         />
-        <Button type = 'primary' onClick = {()=>this.props.addItemAction({description: this.props.dashboard.inputValue})}>add</Button>
+        <Button type = 'primary' onClick = {
+          ()=>this.props.addItemAction({
+            description: this.props.dashboard.inputValue, 
+            userId: this.props.signIn.signIn.id})}>add</Button>
         </div>
         <div style={{margin: '10px', width: '300px'}}>
         <List
@@ -65,7 +68,7 @@ class Dashboard extends Component{
             dataSource={this.props.dashboard.list}
             renderItem={(item,index)=><List.Item actions={[<a key="list-loadmore-edit" onClick = {()=>this.showModal(item.id)}>edit</a>,
             <a key="list-loadmore-more" onClick={()=>alert(`This stuff was update at ${item.updateAt}`)}>more</a>,
-            <a key="list-loadmore-delete" onClick={()=>this.props.deleteItemAction(index,item.id)}>delete</a>]}>
+            <a key="list-loadmore-delete" onClick={()=>this.props.deleteItemAction(index,item.id,this.props.signIn.signIn.id)}>delete</a>]}>
               <List.Item.Meta description = {item.status} title = {item.description} />
               </List.Item>
             }>

@@ -1,5 +1,5 @@
-export function fetchShowTodo(){
-  return fetch('http://localhost:3001/showTodo', {
+export function fetchShowTodo(userId){
+  return fetch(`http://localhost:3001/showTodo?userId=${userId}`, {
     method: 'GET',
     headers: {'Content-type': 'application/json'},
   })

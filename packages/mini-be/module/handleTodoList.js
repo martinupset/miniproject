@@ -1,17 +1,20 @@
 const dbTodoList = require('../model/todoList');
 
-const dbNewTodo = async ( description ) => {
+const dbNewTodo = async ( description, userId ) => {
   const updateTime = new Date()
   await dbTodoList.create({
     description,
     status: 'todo',
-    updateAt:updateTime.toLocaleString()
+    updateAt:updateTime.toLocaleString(),
+    userId
   })
 };
 
 const showTodo =  async ctx => {
+  console.log('miao',ctx.query)
    await dbTodoList.findAll({
-    order: [['id', 'ASC']]
+    order: [['id', 'ASC']],
+    where: {userId: ctx.query.userId}
   })
   .then(result => {
     ctx.response.body = result
