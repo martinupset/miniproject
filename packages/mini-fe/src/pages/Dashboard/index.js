@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import 'antd/dist/antd.css'
 import {Input, Button, List, Modal} from 'antd'
+import {withRouter } from 'react-router-dom';
 const {delCookie} = require('../handlecookie')
 
 class Dashboard extends Component{
@@ -40,6 +41,7 @@ class Dashboard extends Component{
   };
 
   logout(){
+    console.log(this.props)
     this.props.history.push('/login');
     delCookie("token")
   }
@@ -98,4 +100,4 @@ class Dashboard extends Component{
 
 }
 
-export default Dashboard
+export default withRouter(Dashboard);
