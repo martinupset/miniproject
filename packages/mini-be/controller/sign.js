@@ -31,7 +31,8 @@ const signIn = async ctx => {
       status: 200,
       description: 'sign in success!',
       token: token,
-      name: retrieveResult.dataValues.name
+      name: retrieveResult.dataValues.name,
+      id: retrieveResult.dataValues.id
       };
     console.log(token)
   } else {
