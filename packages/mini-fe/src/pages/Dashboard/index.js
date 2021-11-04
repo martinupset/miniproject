@@ -41,7 +41,7 @@ class Dashboard extends Component{
   };
 
   logout(){
-    console.log(this.props)
+    this.props.clearAuthAction()
     this.props.history.push('/login');
     delCookie("token")
   }
