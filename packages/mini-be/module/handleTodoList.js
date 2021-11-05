@@ -17,6 +17,7 @@ const showTodo =  async ctx => {
     where: {userId: ctx.query.userId}
   })
   .then(result => {
+    ctx.set('Cache-control', 'max-age=3600')
     ctx.response.body = result
   })
   .catch(err => {console.log(err)})

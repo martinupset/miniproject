@@ -23,7 +23,6 @@ class NormalLoginForm extends React.Component {
             setCookie("token", cookieValue, 15)
             this.props.setAuthAction(cookieValue)
             // document.cookie = `token = ${this.props.signIn.signIn.token}; expires= ${expiresTime}`
-
             this.props.history.push('/dashboard');
             console.log('cookie', document.cookie);
           } else {

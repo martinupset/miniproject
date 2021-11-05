@@ -41,7 +41,7 @@ class Dashboard extends Component{
   };
 
   logout(){
-    this.props.clearAuthAction()
+    localStorage.clear()
     this.props.history.push('/login');
     delCookie("token")
   }
@@ -64,8 +64,8 @@ class Dashboard extends Component{
             description: this.props.dashboard.inputValue, 
             userId: this.props.signIn.signIn.id})}>add</Button>
         </div>
-        <div style={{margin: '10px', width: '300px'}}>
-        <List
+        <div style={{margin: '10px', width: '300px', backgroundColor: 'white'}}>
+          <List
             bordered
             dataSource={this.props.dashboard.list}
             renderItem={(item,index)=><List.Item actions={[<a key="list-loadmore-edit" onClick = {()=>this.showModal(item.id)}>edit</a>,
@@ -76,17 +76,17 @@ class Dashboard extends Component{
             }>
             </List>
 
-        <Modal
+          <Modal
           title="todo editor"
           visible={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
-        >
+          >
           <Input placeholder="edit description here"
           onChange ={(e) => {this.editorDescription = e.target.value}}></Input>
           <Input placeholder="edit status here"
           onChange = {(e) => {this.editorStatus = e.target.value}}></Input>
-        </Modal>
+          </Modal>
         </div>
 
         <div>
