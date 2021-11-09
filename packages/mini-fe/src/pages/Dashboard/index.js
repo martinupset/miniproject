@@ -1,103 +1,114 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import 'antd/dist/antd.css'
 import {Input, Button, List, Modal} from 'antd'
 import {withRouter } from 'react-router-dom';
+import { useInView } from 'react-intersection-observer'
 const {delCookie} = require('../handlecookie')
 
-class Dashboard extends Component{
-  state = {visible: false, id: 0}
+const Dashboard = (props) => {
+  const [myVisible, setMyVisible] = useState({visible: false, id: 0})
+  const [compList, setCompList] = useState([])
+  const bottomDomRef = useRef(null)
+  const homeList = [...props.dashboard.list]
+  const [myRef, inView] = useInView({
+    threshold: 0,
+ });
+ const scrollRenderHandler = () => {
+   if (inView && compList !== homeList){
+     setCompList({
+       homeList
+     })
+   }
+ }
 
-  editorDescription = null
+  let editorDescription = null
 
-  editorStatus = null
+  let editorStatus = null
 
-  constructor(props){
-    super(props);
-    console.log(this.state)
-  }
-
-  showModal = (id) => {
-    this.setState({
-      visible: true,
-      id
-    });
+  const showModal = (id) => {
+    setMyVisible({visible: true, id});
   };
 
-  handleOk = () => {
-    this.props.changeItemAction({
-      'id': this.state.id,
-      'description':this.editorDescription,
-      'status':this.editorStatus
-    }, this.props.signIn.signIn.id)
-    this.setState({
-      visible: false,
-    });
+  const handleOk = (id) => {
+    props.changeItemAction({
+      'id': id,
+      'description':editorDescription,
+      'status':editorStatus
+    }, props.signIn.signIn.id)
+
+    setMyVisible({...myVisible, visible: false});
   };
 
-  handleCancel = () => {
-    this.setState({
-      visible: false,
-    });
+  const handleCancel = () => {
+    setMyVisible({...myVisible, visible:false});
   };
 
-  logout(){
+  const logout = () =>{
     localStorage.clear()
-    this.props.history.push('/login');
+    props.history.push('/login');
     delCookie("token")
   }
 
-  componentDidMount(){
-    this.props.showTodoAction(this.props.signIn.signIn.id)
-  }
+  useEffect(() => {
+    props.showTodoAction(props.signIn.signIn.id)
+  }, [])
 
-  render(){
+  useEffect(() => {
+    document.addEventListener('scroll', scrollRenderHandler);
+    return () => {
+      document.removeEventListener('scroll', scrollRenderHandler);
+    }
+  }, [])
+
     return(
       <div style = {{margin: '10px'}}>
       <div>
         <Input
-        placeholder = {this.props.dashboard.inputValue}
+        placeholder = {props.dashboard.inputValue}
         style = {{width: '250px', marginRight: '10px'}}
-        onChange = {(e) => this.props.changeInputAction(e.target.value)}
+        onChange = {(e) => props.changeInputAction(e.target.value)}
         />
         <Button type = 'primary' onClick = {
-          ()=>this.props.addItemAction({
-            description: this.props.dashboard.inputValue, 
-            userId: this.props.signIn.signIn.id})}>add</Button>
+          ()=>props.addItemAction({
+            description: props.dashboard.inputValue, 
+            userId: props.signIn.signIn.id})}>add</Button>
         </div>
         <div style={{margin: '10px', width: '300px', backgroundColor: 'white'}}>
           <List
             bordered
-            dataSource={this.props.dashboard.list}
-            renderItem={(item,index)=><List.Item actions={[<a key="list-loadmore-edit" onClick = {()=>this.showModal(item.id)}>edit</a>,
+            dataSource={homeList}
+            renderItem={(item,index)=><List.Item actions={[<a key="list-loadmore-edit" onClick = {()=>showModal(item.id)}>edit</a>,
             <a key="list-loadmore-more" onClick={()=>alert(`This stuff was update at ${item.updateAt}`)}>more</a>,
-            <a key="list-loadmore-delete" onClick={()=>this.props.deleteItemAction(index,item.id,this.props.signIn.signIn.id)}>delete</a>]}>
+            <a key="list-loadmore-delete" onClick={()=>props.deleteItemAction(index,item.id,props.signIn.signIn.id)}>delete</a>]}>
               <List.Item.Meta description = {item.status} title = {item.description} />
               </List.Item>
             }>
             </List>
+            <div ref={myRef}>
+            </div>
+            <div>
+            <p>已经到底啦</p>
+            </div>
 
           <Modal
           title="todo editor"
-          visible={this.state.visible}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
+          visible={myVisible.visible}
+          onOk={() => handleOk(myVisible.id)}
+          onCancel={handleCancel}
           >
           <Input placeholder="edit description here"
-          onChange ={(e) => {this.editorDescription = e.target.value}}></Input>
+          onChange ={(e) => {editorDescription = e.target.value}}></Input>
           <Input placeholder="edit status here"
-          onChange = {(e) => {this.editorStatus = e.target.value}}></Input>
+          onChange = {(e) => {editorStatus = e.target.value}}></Input>
           </Modal>
         </div>
 
         <div>
-        <h1>Hello User {this.props.signIn.signIn.name}</h1>
-        <Button type = 'primary' onClick = {()=>this.logout()}>Logout</Button>
+        <h1>Hello User {props.signIn.signIn.name}</h1>
+        <Button type = 'primary' onClick = {()=>logout()}>Logout</Button>
         </div>
     </div>
     )
   }
-
-
-}
 
 export default withRouter(Dashboard);
